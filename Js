@@ -1,0 +1,45 @@
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("employeeForm");
+    const calculateButton = document.getElementById("calculateButton");
+    const resultDiv = document.getElementById("result");
+
+    const employees = [];
+
+    calculateButton.addEventListener("click", function() {
+        const empId = document.getElementById("empId").value;
+        const name = document.getElementById("name").value;
+        const position = document.getElementById("position").value;
+        const baseSalary = parseFloat(document.getElementById("baseSalary").value);
+        const workingHours = parseFloat(document.getElementById("workingHours").value);
+        const leaveTaken = parseInt(document.getElementById("leaveTaken").value);
+        const bonus = parseFloat(document.getElementById("bonus").value);
+
+        const salary = calculateSalary(baseSalary, workingHours, leaveTaken, bonus);
+
+        const employee = {
+            empId,
+            name,
+            position,
+            salary
+        };
+
+        employees.push(employee);
+
+        displayResult(employee);
+
+        form.reset();
+    });
+
+    function calculateSalary(baseSalary, workingHours, leaveTaken, bonus) {
+        const hourlyRate = baseSalary / 160;
+        const salary = workingHours * hourlyRate - leaveTaken * hourlyRate * 8 + bonus;
+        return salary.toFixed(2);
+    }
+
+    function displayResult(employee) {
+        const resultText = `${employee.name} (Employee ID: ${employee.empId}, Position: ${employee.position}) - Salary: $${employee.salary}`;
+        const resultElement = document.createElement("div");
+        resultElement.textContent = resultText;
+        resultDiv.appendChild(resultElement);
+    }
+});
