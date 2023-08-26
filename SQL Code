@@ -1,0 +1,49 @@
+class Employee:
+    def __init__(self, emp_id, name, position):
+        self.emp_id = emp_id
+        self.name = name
+        self.position = position
+        self.working_hours = 0
+        self.leave_taken = 0
+        self.bonus = 0
+        self.base_salary = 0
+
+    def set_base_salary(self, base_salary):
+        self.base_salary = base_salary
+
+    def set_working_hours(self, working_hours):
+        self.working_hours = working_hours
+
+    def set_leave_taken(self, leave_taken):
+        self.leave_taken = leave_taken
+
+    def set_bonus(self, bonus):
+        self.bonus = bonus
+
+    def calculate_salary(self):
+        hourly_rate = self.base_salary / 160  # Assuming 160 working hours per month
+        salary = self.working_hours * hourly_rate
+        salary -= self.leave_taken * hourly_rate * 8  # Assuming 8 hours per leave day
+        salary += self.bonus
+        return salary
+
+def main():
+    emp_id = input("Enter Employee ID: ")
+    name = input("Enter Employee Name: ")
+    position = input("Enter Employee Position: ")
+    base_salary = float(input("Enter Base Salary: "))
+    working_hours = float(input("Enter Working Hours: "))
+    leave_taken = int(input("Enter Leave Taken: "))
+    bonus = float(input("Enter Bonus: "))
+
+    emp = Employee(emp_id, name, position)
+    emp.set_base_salary(base_salary)
+    emp.set_working_hours(working_hours)
+    emp.set_leave_taken(leave_taken)
+    emp.set_bonus(bonus)
+
+    salary = emp.calculate_salary()
+    print(f"Salary for {emp.name} (Employee ID: {emp.emp_id}, Position: {emp.position}): ${salary:.2f}")
+
+if __name__ == "__main__":
+    main()
